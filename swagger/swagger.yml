@@ -1,0 +1,118 @@
+swagger: '2.0'
+
+info:
+  title: Test For Auto
+  version: '0.1'
+  contact:
+    email: icq431@yandex.ru
+
+basePath: /api
+
+paths:
+  /cars:
+    get:
+      summary: Список машин
+      tags:
+        - cars
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: "Возвращает список машин, имеющихся в базе данных"
+          schema:
+            type: object
+            properties:
+              success:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/UniversalCarUser'
+  /users:
+    get:
+      summary: Список пользователей
+      tags:
+        - users
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: "Возвращает список пользователей, имеющихся в базе данных"
+          schema:
+            type: object
+            properties:
+              success:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/UniversalCarUser'
+  /usage:
+    post:
+      summary: Список пользователей
+      tags:
+        - usage
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              car_id:
+                type: integer
+              user_id:
+                type: integer
+              time_from:
+                type: string
+              time_to:
+                type: string
+      responses:
+        '200':
+          description: 'При успехе, вернет вновь созданную модель'
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              car_id:
+                type: integer
+              user_id:
+                type: integer
+              created_at:
+                type: string
+              updated_at:
+                type: string
+        '422':
+          $ref: '#/responses/Error422'
+
+responses:
+  Error422:
+    description: Ошибка входных данных.
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+
+definitions:
+  UniversalCarUser:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
